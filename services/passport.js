@@ -11,17 +11,19 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
     User.findById(id)
-    .then(user => { // user from user model in database
-        done(null, user);
-    });
+        .then(user => { // user from user model in database
+            done(null, user);
+        });
 });
 
 passport.use(new GoogleStrategy(
     {
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret,
-        callbackURL: '/auth/google/callback'
-    }, (accessToken, refreshToken, profile, done) => {
+        callbackURL: '/auth/google/callback',
+        proxy: true
+    },
+    (accessToken, refreshToken, profile, done) => {
         User.findOne({ googleId: profile.id })
             .then((existingUser) => {
                 if (existingUser) {
@@ -30,8 +32,8 @@ passport.use(new GoogleStrategy(
                 } else {
                     // we don't have a user record with this ID, make a new record
                     new User({ googleId: profile.id })
-                    .save()
-                    .then(user => done(null, user));
+                        .save()
+                        .then(user => done(null, user));
                 }
             })
     })
