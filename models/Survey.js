@@ -7,7 +7,8 @@ const surveySchema = new Schema({
     title: String,
     body: String,
     img: { data: Buffer, contentType: String },
-    _user: { type: Schema.Types.ObjectId, ref: 'User' }
+    _user: { type: Schema.Types.ObjectId, ref: 'User' },
+    dateSent: Date
 });
 
 mongoose.model('surveys', surveySchema);
