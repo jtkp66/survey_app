@@ -37,7 +37,7 @@ class Header extends Component {
 }
 
 const styles = {
-  backgroundColor: 'red'
+  backgroundColor: 'navy'
 }
 
 function mapStateToProps({ auth }) {
