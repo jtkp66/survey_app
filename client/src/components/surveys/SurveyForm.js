@@ -42,7 +42,7 @@ function validate(values) {
   const errors = {};
 
   if (!values.coordinator) {
-    errors.title = 'You must provide a title';
+    errors.coordinator = 'You must provide a coordinator name';
   }
 
   return errors;
