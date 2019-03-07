@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import SurveyField from './SurveyField';
 
 const Fields = [
-  { label: 'Coordinator', name: 'coordinator' },
-  { label: 'Student', name: 'student' },
-  { label: 'Title', name: 'title' },
-  { label: 'Body', name: 'body' },
+  { label: 'Coordinator', name: 'coordinator', novalueError: 'You must provide a coordinator name.' },
+  { label: 'Student', name: 'student', novalueError: 'You must provide a student name.' },
+  { label: 'Title', name: 'title', novalueError: 'You must provide a title.' },
+  { label: 'Body', name: 'body', novalueError: 'You must provide a body value.' },
 ]
 
 class SurveyForm extends Component {
@@ -41,9 +41,11 @@ class SurveyForm extends Component {
 function validate(values) {
   const errors = {};
 
-  if (!values.coordinator) {
-    errors.coordinator = 'You must provide a coordinator name';
-  }
+  _.each(Fields, ({ name, novalueError }) => {
+    if (!values[name]) {
+      errors[name] = novalueError;
+    }
+  })
 
   return errors;
 }
